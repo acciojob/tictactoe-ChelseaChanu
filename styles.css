@@ -74,7 +74,7 @@ input::placeholder{
 	gap:3px;
 }
 
-.board div{
+.cell{
 	background-color:pink;
 	font-family: 'Permanent Marker', cursive;
 	font-size:2rem;

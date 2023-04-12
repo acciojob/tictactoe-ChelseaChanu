@@ -9,6 +9,17 @@ const message = document.querySelector(".message");
 const xMark = "X";
 const oMark = "O";
 let turn = true;
+let win = false;
+const winnerCombo =[
+	[0,1,2],
+	[3,4,5],
+	[6,7,8],
+	[0,3,6],
+	[1,4,7],
+	[2,5,8],
+	[0,4,8],
+	[2,4,6]
+];
 
 //to display tic tac toe playground
 btn.addEventListener("click",()=>{
@@ -29,8 +40,16 @@ function handleClick(e){
 	let currentCell = e.target;
 	const currentMark = turn? xMark : oMark;
 	markTicTac(currentCell,currentMark);
-	
 	takeTurn();
+	if(winner(currentMark)){
+		win = true;
+		if(currentMark==="X"){
+			message.textContent = `${player1.value}, congratulations you won!`;
+		}
+		else{
+			message.textContent = `${player2.value}, congratulations you won!`;
+		}
+	}
 }
 
 // marking by different player 
@@ -41,7 +60,21 @@ function markTicTac(currentCell,currentMark) {
 	else{
 		message.textContent = `${player1.value}, you're up`;
 	}
-	currentCell.textContent = currentMark;
+
+	if(!win)
+		currentCell.textContent = currentMark;
+}
+
+//deciding winner
+function  winner(currentMark) {
+	return winnerCombo.some(combinations =>{
+		return combinations.every(element =>{
+			let val = cells[element].textContent;
+			if(val!==currentMark)
+				return false;
+			return true;
+		});
+	});
 }
 
 // alternating between player
